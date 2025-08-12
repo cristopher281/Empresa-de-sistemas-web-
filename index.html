@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Empresa dedicada a la venta de sistemas web a medida" />
+  <title>WebSystems - Soluciones Web a tu medida</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      background-color: #f4f7fa;
+      color: #333;
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .animated-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+    header {
+      background-color: #007bff;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 2;
+    }
+    header h1 { margin-bottom: 5px; font-size: 2rem; }
+    header p { font-size: 1.1rem; font-weight: 300; }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #0056b3;
+      position: relative;
+      z-index: 2;
+    }
+    nav a {
+      color: white;
+      padding: 15px 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    nav a:hover { background-color: #003d80; }
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 15px;
+      position: relative;
+      z-index: 2;
+    }
+    section { margin-bottom: 40px; }
+    h2 {
+      color: #007bff;
+      margin-bottom: 15px;
+      font-size: 1.8rem;
+      border-bottom: 3px solid #007bff;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      gap: 20px;
+    }
+    .service-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: transform 0.3s ease;
+    }
+    .service-card:hover { transform: translateY(-5px) scale(1.05); }
+    .service-card h3 { margin-bottom: 10px; color: #003d80; }
+    .service-card p { color: #555; }
+    .cta {
+      text-align: center;
+      margin-top: 50px;
+    }
+    .cta button {
+      background-color: #007bff;
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .cta button:hover {
+      background-color: #0056b3;
+      transform: scale(1.08);
+    }
+    footer {
+      background-color: #222;
+      color: #bbb;
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-section {
+      text-align: center;
+      padding: 100px 20px;
+      background: linear-gradient(rgba(0,123,255,0.8), rgba(0,123,255,0.8)), url('hero-bg.jpg') no-repeat center center/cover;
+    }
+    .hero-section h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      color: #222;
+      line-height: 1.2;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      letter-spacing: 1px;
+      text-shadow: none;
+      background: none;
+      position: relative;
+    }
+    .ruptura {
+      display: inline-block;
+      position: relative;
+      color: #222;
+      font-family: inherit;
+      letter-spacing: 2px;
+      font-weight: bold;
+      animation: ruptura 1.2s cubic-bezier(.68,-0.55,.27,1.55) forwards;
+    }
+    @keyframes ruptura {
+      0% { letter-spacing: 2px; filter: blur(0px); }
+      30% { letter-spacing: 8px; filter: blur(2px); }
+      60% { letter-spacing: 2px; filter: blur(0px); }
+      100% { letter-spacing: 2px; filter: blur(0px); }
+    }
+    .hero-section span {
+      font-size: 1.2rem;
+      display: block;
+      margin-top: 10px;
+      color: #e0e0e0;
+    }
+    .hero-section p {
+      font-size: 1.1rem;
+      color: #f4f7fa;
+      margin-bottom: 20px;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .cta-btn {
+      background: linear-gradient(90deg, #007bff, #0056b3);
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 28px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .cta-btn:hover {
+      background: linear-gradient(90deg, #0056b3, #007bff);
+      transform: scale(1.07);
+    }
+    .beneficios ul, .faq ul {
+      list-style: disc inside;
+      margin: 15px 0 0 0;
+      padding: 0;
+    }
+    .beneficios li, .faq li {
+      margin-bottom: 10px;
+      color: #333;
+      font-size: 1.05rem;
+    }
+    .sobre-nosotros p {
+      font-size: 1.1rem;
+      color: #444;
+      margin-bottom: 10px;
+    }
+    .proceso ol {
+      margin: 15px 0 0 0;
+      padding-left: 20px;
+    }
+    .proceso li {
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+      color: #333;
+    }
+    .testimonios blockquote {
+      background: #f4f7fa;
+      border-left: 4px solid #007bff;
+      margin: 15px 0;
+      padding: 15px 20px;
+      font-style: italic;
+      color: #222;
+      border-radius: 6px;
+    }
+    .testimonios span {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.98rem;
+      color: #007bff;
+    }
+    .contact-links {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+    .footer-text {
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      color: #bbb;
+      margin-top: 10px;
+    }
+    .footer-text a {
+      color: #bbb;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-text a:hover {
+      color: #fff;
+    }
+    /* Animaciones de entrada */
+    .gsap-animate {
+      opacity: 0;
+      transform: translateY(60px);
+    }
+    .hero-sub {
+      font-size: 1.2rem;
+      display: block;
+      margin-top: 10px;
+      color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Fondo animado SVG -->
+  <svg class="animated-bg" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle id="bgCircle1" cx="400" cy="300" r="180" fill="#007bff" opacity="0.18"/>
+    <circle id="bgCircle2" cx="1600" cy="800" r="220" fill="#0056b3" opacity="0.13"/>
+    <circle id="bgCircle3" cx="1000" cy="600" r="120" fill="#003d80" opacity="0.10"/>
+  </svg>
+  <header class="gsap-animate hero-section">
+    <h1 id="heroTitle"><span class="ruptura">Diseños web profesionales al alcance de tu pequeña empresa.</span><br><span class="hero-sub">Tu sitio web ideal: fácil, asequible y diseñado para crecer.</span></h1>
+    <p id="heroSubtitle">Creamos una web que se ve profesional y transmite confianza a tus clientes, sin que te cueste una fortuna.</p>
+    <div class="hero-buttons">
+      <button class="cta-btn" onclick="scrollToContact()">Cotizar ahora</button>
+      <button class="cta-btn" onclick="scrollToPortfolio()">Ver portafolio</button>
+    </div>
+  </header>
+  <main>
+    <section class="gsap-animate beneficios">
+      <h2>¿Por qué elegirnos?</h2>
+      <ul>
+        <li><strong>Diseño con impacto visual:</strong> Creamos una web que se ve profesional y transmite confianza a tus clientes, sin que te cueste una fortuna.</li>
+        <li><strong>Una web siempre disponible:</strong> Tus clientes podrán navegar sin esperas y desde cualquier dispositivo (móvil, tablet o computadora).</li>
+      </ul>
+    </section>
+    <section class="gsap-animate sobre-nosotros">
+      <h2>Sobre Nosotros</h2>
+      <p>Entendemos que un buen sitio web es vital para un negocio, pero los precios altos son una barrera. Nuestra misión es democratizar la calidad y el diseño web para que cualquier pequeña empresa pueda competir en línea.</p>
+    </section>
+    <section class="gsap-animate proceso">
+      <h2>Nuestro proceso</h2>
+      <ol>
+        <li><strong>Paso 1: Entendemos tu negocio.</strong> Hablaremos sobre tus ideas, tus productos y lo que necesitas lograr. No necesitas saber de tecnología, solo de tu negocio.</li>
+        <li><strong>Paso 2: Creamos el diseño.</strong> Te mostramos un diseño claro y atractivo. Nos aseguramos de que lo ames antes de programar.</li>
+        <li><strong>Paso 3: Desarrollo y entrega.</strong> Construimos tu sitio y te entregamos una web lista para usar. Te enseñamos a usarla para que tengas el control.</li>
+      </ol>
+    </section>
+    <section class="gsap-animate testimonios">
+      <h2>Testimonios</h2>
+      <blockquote>“Antes no vendía nada por internet. Ahora, con el nuevo sitio, los clientes me encuentran en Google y mis ventas han aumentado.”<br><span>— Juan, dueño de una tienda de regalos.</span></blockquote>
+    </section>
+    <section class="gsap-animate faq">
+      <h2>Preguntas Frecuentes</h2>
+      <ul>
+        <li><strong>¿Necesito saber de programación para manejar mi web?</strong> No, te entregamos un sistema fácil de usar para que puedas actualizar tu contenido sin ayuda.</li>
+        <li><strong>¿Cuáles son los costos ocultos?</strong> Nuestro precio es claro y transparente. Te explicaremos todo lo que está incluido y lo que no, desde el primer día.</li>
+      </ul>
+    </section>
+    <section id="contacto" class="gsap-animate">
+      <h2>Contacto</h2>
+      <p>Cuéntanos sobre tu proyecto y te responderemos en menos de 24 horas.</p>
+      <form id="contactForm" novalidate>
+        <div>
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre completo" />
+        </div>
+        <div>
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" required placeholder="tu@correo.com" />
+        </div>
+        <div>
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" required placeholder="Escribe tu consulta aquí..."></textarea>
+        </div>
+        <input type="submit" value="Enviar" />
+        <p class="success-message" id="successMessage">¡Mensaje enviado con éxito! Gracias por contactarnos.</p>
+      </form>
+      <div class="contact-links">
+        <a class="cta-btn" href="https://wa.me/83574654" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="cta-btn" href="mailto:info@websystems.com">info@websystems.com</a>
+        <a class="cta-btn" href="https://github.com/cristopher281/Portafolio-Web" target="_blank" rel="noopener">Ver mi portafolio web</a>
+      </div>
+    </section>
+    <div class="cta gsap-animate">
+      <p>Tu negocio merece un sitio web que venda por ti. Contáctanos y recibe tu propuesta en menos de 24 horas.</p>
+      <button class="cta-btn" onclick="scrollToContact()">Quiero mi sitio web</button>
+      <a class="cta-btn" href="https://wa.me/5491112345678" target="_blank">Hablar por WhatsApp</a>
+    </div>
+  </main>
+  <footer>
+    <div class="footer-text">© 2024 WebSystems. Todos los derechos reservados. | <a href="mailto:info@websystems.com">info@websystems.com</a> | Tel: +54 9 11 1234 5678</div>
+  </footer>
+
+  <script>
+    // Animación de fondo SVG
+    gsap.to('#bgCircle1', {
+      duration: 8,
+      x: 80,
+      y: 40,
+      scale: 1.1,
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut'
+    });
+    gsap.to('#bgCircle2', {
+      duration: 10,
+      x: -100,
+      y: -60,
+      scale: 1.15,
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut'
+    });
+    gsap.to('#bgCircle3', {
+      duration: 7,
+      x: 60,
+      y: 30,
+      scale: 1.08,
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut'
+    });
+
+    // Animaciones de entrada GSAP
+    gsap.utils.toArray('.gsap-animate').forEach((el, i) => {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        delay: 0.5 + i * 0.3,
+        ease: 'power3.out'
+      });
+    });
+    // Animación de entrada para el texto del footer
+    gsap.to('.footer-text', {
+      duration: 2,
+      opacity: 1,
+      y: -10,
+      ease: 'power2.out',
+      delay: 2.5
+    });
+
+    // Animación inmersiva para servicios
+    gsap.from('.services', {
+      opacity: 0,
+      scale: 0.8,
+      filter: 'blur(10px)',
+      duration: 1.5,
+      delay: 0.7,
+      ease: 'power4.out'
+    });
+    // Animación de aparición rotando y fade para "Nosotros"
+    gsap.from('#nosotros', {
+      opacity: 0,
+      rotateY: 45,
+      duration: 1.5,
+      delay: 1.2,
+      ease: 'power2.out'
+    });
+    // Animación de rebote desde abajo para el formulario de contacto
+    gsap.from('#contacto form', {
+      opacity: 0,
+      y: 100,
+      scale: 0.9,
+      duration: 1.6,
+      delay: 1.7,
+      ease: 'bounce.out'
+    });
+    // Animación de zoom y fade para CTA
+    gsap.from('.cta', {
+      opacity: 0,
+      scale: 0.7,
+      duration: 1.2,
+      delay: 2.2,
+      ease: 'power3.out'
+    });
+
+    // Función para hacer scroll suave a contacto
+    function scrollToContact() {
+      document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+    }
+    function scrollToPortfolio() {
+      document.getElementById('portafolio').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Validación y simulación de envío de formulario
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nombre = this.nombre.value.trim();
+      const email = this.email.value.trim();
+      const mensaje = this.mensaje.value.trim();
+      const successMessage = document.getElementById('successMessage');
+      if (nombre === '' || email === '' || mensaje === '') {
+        alert('Por favor, completa todos los campos.');
+        return;
+      }
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        alert('Por favor, ingresa un correo electrónico válido.');
+        return;
+      }
+      this.querySelector('input[type="submit"]').disabled = true;
+      this.querySelector('input[type="submit"]').value = 'Enviando...';
+      setTimeout(() => {
+        this.reset();
+        this.querySelector('input[type="submit"]').disabled = false;
+        this.querySelector('input[type="submit"]').value = 'Enviar';
+        successMessage.style.display = 'block';
+        setTimeout(() => {
+          successMessage.style.display = 'none';
+        }, 5000);
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
